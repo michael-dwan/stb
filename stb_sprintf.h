@@ -179,6 +179,7 @@ PERFORMANCE vs MSVC 2008 32-/64-bit (GCC is even slower than MSVC):
 
 #if defined(__has_attribute)
  #if __has_attribute(format)
+   // NOTE(dwan): In order to use a custom specifier, we would need to disable this.
    #define STBSP__ATTRIBUTE_FORMAT(fmt,va) __attribute__((format(printf,fmt,va)))
  #endif
 #endif
@@ -583,6 +584,22 @@ STBSP__PUBLICDEF int STB_SPRINTF_DECORATE(vsprintfcb)(STBSP_SPRINTFCB *callback,
 #endif
          stbsp__int32 dp;
          char const *sn;
+
+      // TODO(dwan): This would be nice, but, we'd have to disable the format attribute. Need to think on it.
+      //case 'Q':
+      //{
+      //   struct String {char* str; stbsp__int64 size;};
+      //   struct String str = va_arg(va, struct String);
+      //   s = str.str;
+      //   l = str.size;
+      //   lead[0] = 0;
+      //   tail[0] = 0;
+      //   pr = 0;
+      //   dp = 0;
+      //   cs = 0;
+      //   // copy the string in
+      //   goto scopy;
+      //}
 
       case 's':
          // get the string
